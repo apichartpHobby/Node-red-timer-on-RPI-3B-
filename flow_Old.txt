@@ -1,0 +1,625 @@
+[
+    {
+        "id": "f96581b9.5c6a9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b70f3ee.2f72fc",
+        "type": "ui_switch",
+        "z": "f96581b9.5c6a9",
+        "name": "Water Pum",
+        "label": "Water Pump",
+        "group": "68d475af.1fe4dc",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 130,
+        "y": 720,
+        "wires": [
+            [
+                "a72ce815.36e318"
+            ]
+        ]
+    },
+    {
+        "id": "83bff4df.9443e8",
+        "type": "ui_switch",
+        "z": "f96581b9.5c6a9",
+        "name": "Solinoid",
+        "label": "Solinoid Valve 1",
+        "group": "68d475af.1fe4dc",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 480,
+        "y": 460,
+        "wires": [
+            [
+                "8e75b633.b02d38"
+            ]
+        ]
+    },
+    {
+        "id": "a72ce815.36e318",
+        "type": "rpi-gpio out",
+        "z": "f96581b9.5c6a9",
+        "name": "Output to Air pump",
+        "pin": "13",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 790,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "8e75b633.b02d38",
+        "type": "rpi-gpio out",
+        "z": "f96581b9.5c6a9",
+        "name": "Output to Water Pump",
+        "pin": "15",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 760,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "1e342fd7.e3739",
+        "type": "inject",
+        "z": "f96581b9.5c6a9",
+        "name": "Timer",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "30",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 100,
+        "wires": [
+            [
+                "d3d29634.424b58"
+            ]
+        ]
+    },
+    {
+        "id": "e319acb0.1a799",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "Switch1 Off",
+        "func": "msg.payload = false;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 360,
+        "wires": [
+            [
+                "c83b06f5.dd4f88",
+                "36886efe.951612",
+                "575d1faf.89851",
+                "8e75b633.b02d38",
+                "c3c5f1f9.a2879"
+            ]
+        ]
+    },
+    {
+        "id": "e8d448.c951ebb8",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "Switch2 On",
+        "func": "msg.payload = true;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 640,
+        "wires": [
+            [
+                "4b0314e5.382f4c",
+                "a72ce815.36e318"
+            ]
+        ]
+    },
+    {
+        "id": "57444797.b4a418",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "Switch2 Off",
+        "func": "msg.payload = false;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 680,
+        "wires": [
+            [
+                "4b0314e5.382f4c",
+                "a72ce815.36e318"
+            ]
+        ]
+    },
+    {
+        "id": "e5addd64.1d1d",
+        "type": "ui_text",
+        "z": "f96581b9.5c6a9",
+        "group": "68d475af.1fe4dc",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "Valve Noti",
+        "label": "Valve Status: ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1070,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c83b06f5.dd4f88",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "NotiValve",
+        "func": "if (msg.payload===true) {\n    msg.payload=\"Valve ON\";\n}\nelse\n{\n    msg.payload=\"Valve OFF\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 780,
+        "y": 100,
+        "wires": [
+            [
+                "e5addd64.1d1d"
+            ]
+        ]
+    },
+    {
+        "id": "f17997b9.ed3c08",
+        "type": "ui_text",
+        "z": "f96581b9.5c6a9",
+        "group": "68d475af.1fe4dc",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "WaterPumpNoti",
+        "label": "Pump Status : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 900,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "4b0314e5.382f4c",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "Noti1",
+        "func": "if (msg.payload===true) {\n    msg.payload=\"Pump ON\";\n}\nelse\n{\n    msg.payload=\"Pump OFF\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 730,
+        "y": 640,
+        "wires": [
+            [
+                "f17997b9.ed3c08"
+            ]
+        ]
+    },
+    {
+        "id": "e022c921.c84498",
+        "type": "ui_template",
+        "z": "f96581b9.5c6a9",
+        "group": "68d475af.1fe4dc",
+        "name": "Clock Toolbar",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "format": "<script id=\"titleScript\" type=\"text/javascript\">\n    $('#clock').remove();\n    var toolbar = $('.md-toolbar-tools');\n    var div = $('<div/>');\n    var p = $('<p/ id=\"clock\">');\n    \n    $('#titleScript').parent().hide();\n    div.append(p);\n    div[0].style.margin = '5px 5px 5px auto';\n    toolbar.append(div);\n\n    function displayTitle(lh) {\n        p.text(lh); \n    }\n    \n    function upTime() {\n        var d = new Date();\n        p.text(d.toLocaleTimeString('de-AT'));\n    }\n\n    \n\n    // Watch the payload and update the title\n    (function(scope) {\n        scope.$watch('msg.payload', function(data) {\n            displayTitle(data);\n        });\n        setInterval(upTime,1000);\n    })(scope);\n</script>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 120,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b7f9e3d.41dc2",
+        "type": "debug",
+        "z": "f96581b9.5c6a9",
+        "name": "AIR ON",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 740,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "36886efe.951612",
+        "type": "debug",
+        "z": "f96581b9.5c6a9",
+        "name": "AIR OFF",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 760,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "575d1faf.89851",
+        "type": "mqtt out",
+        "z": "f96581b9.5c6a9",
+        "name": "VT_ON",
+        "topic": "VT-01",
+        "qos": "",
+        "retain": "",
+        "broker": "abf3e8f8.b6ced8",
+        "x": 760,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d19000d3.57098",
+        "type": "mqtt in",
+        "z": "f96581b9.5c6a9",
+        "name": "MValve",
+        "topic": "VT-02",
+        "qos": "2",
+        "broker": "abf3e8f8.b6ced8",
+        "x": 250,
+        "y": 440,
+        "wires": [
+            [
+                "e2c91d50.08009"
+            ]
+        ]
+    },
+    {
+        "id": "c202fedf.2cc7c",
+        "type": "debug",
+        "z": "f96581b9.5c6a9",
+        "name": "mvalve",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 780,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "e2c91d50.08009",
+        "type": "switch",
+        "z": "f96581b9.5c6a9",
+        "name": "Check Valv State",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": true,
+        "outputs": 2,
+        "x": 190,
+        "y": 560,
+        "wires": [
+            [
+                "c202fedf.2cc7c",
+                "dc70e83d.12b2f8"
+            ],
+            [
+                "e319acb0.1a799",
+                "c202fedf.2cc7c"
+            ]
+        ]
+    },
+    {
+        "id": "4b954d96.fa4f34",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "Test Get DT",
+        "func": "var hh = msg.payload.split(\",\");\n//var mm = msg.payload.slice(3,2);\nvar ihh = Number(hh[0]);\nvar imm = Number(hh[1]);\nvar tt = (60*ihh) + imm;\nmsg.payload  = tt;\nvar remainOn = flow.get('rmON')||0;\nif (remainOn === undefined) {\n    remainOn = 0;\n    flow.set('rmON',remainON );\n}\nvar remainOff = flow.get('rmOFF');\nif (remainOff === undefined) {\n    remainOff = 0;\n    flow.set('rmOFF',remainOff );\n}\nvar strON =flow.get('StartON');\nif (strON === undefined) {\n    strON = 420;\n    flow.set('StartON',strON );\n}\nvar strOFF =flow.get('StartOFF');\nif (strOFF === undefined) {\n    strOFF = 460;\n    flow.set('StartOFF',strOFF );\n}\nif ((tt >= strON)&&(tt <= strOFF))\n{\n    remainOff = strOFF - tt;\n    remainOn = 0;\n}\nelse\n{\n    remainOff = 0;\n    if (tt < strON) {\n        remainOn = strON - tt;\n    }\n    if (tt > strOFF) {\n        remainOn = 1440 + strON - tt;\n    }\n}\nflow.set('rmON',remainOn );\nflow.set('rmOFF',remainOff );\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "f30a52d1.ff736",
+                "ef55b56.aa3ee48",
+                "50c5b248.04c27c"
+            ]
+        ]
+    },
+    {
+        "id": "f30a52d1.ff736",
+        "type": "debug",
+        "z": "f96581b9.5c6a9",
+        "name": "GDT",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 570,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d3d29634.424b58",
+        "type": "moment",
+        "z": "f96581b9.5c6a9",
+        "name": "testTime",
+        "topic": "tt",
+        "input": "",
+        "inputType": "date",
+        "inTz": "Asia/Bangkok",
+        "adjAmount": "0",
+        "adjType": "hours",
+        "adjDir": "add",
+        "format": "HH,mm",
+        "locale": "th_TH",
+        "output": "payload",
+        "outputType": "msg",
+        "outTz": "Asia/Bangkok",
+        "x": 80,
+        "y": 140,
+        "wires": [
+            [
+                "4b954d96.fa4f34",
+                "f30a52d1.ff736"
+            ]
+        ]
+    },
+    {
+        "id": "dc70e83d.12b2f8",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "Switch1 On",
+        "func": "msg.payload = true;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 240,
+        "wires": [
+            [
+                "c83b06f5.dd4f88",
+                "5b7f9e3d.41dc2",
+                "575d1faf.89851",
+                "8e75b633.b02d38",
+                "c3c5f1f9.a2879"
+            ]
+        ]
+    },
+    {
+        "id": "ef55b56.aa3ee48",
+        "type": "switch",
+        "z": "f96581b9.5c6a9",
+        "name": "SWValve",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "420",
+                "vt": "num",
+                "v2": "470",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "1020",
+                "vt": "num",
+                "v2": "1060",
+                "v2t": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "dc70e83d.12b2f8"
+            ],
+            [
+                "dc70e83d.12b2f8"
+            ],
+            [
+                "e319acb0.1a799"
+            ]
+        ]
+    },
+    {
+        "id": "50c5b248.04c27c",
+        "type": "switch",
+        "z": "f96581b9.5c6a9",
+        "name": "SWPump",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "btwn",
+                "v": "471",
+                "vt": "num",
+                "v2": "474",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "1061",
+                "vt": "num",
+                "v2": "1063",
+                "v2t": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 120,
+        "y": 620,
+        "wires": [
+            [
+                "e8d448.c951ebb8"
+            ],
+            [
+                "e8d448.c951ebb8"
+            ],
+            [
+                "57444797.b4a418"
+            ]
+        ]
+    },
+    {
+        "id": "7b6306eb.32e9e8",
+        "type": "ui_text",
+        "z": "f96581b9.5c6a9",
+        "group": "68d475af.1fe4dc",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "ValveNext ON",
+        "label": "Valve will  : ",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 980,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "25140d9b.a19b42",
+        "type": "catch",
+        "z": "f96581b9.5c6a9",
+        "name": "",
+        "scope": [
+            "c83b06f5.dd4f88"
+        ],
+        "x": 1100,
+        "y": 160,
+        "wires": [
+            [
+                "9da82b8d.921498"
+            ]
+        ]
+    },
+    {
+        "id": "9da82b8d.921498",
+        "type": "debug",
+        "z": "f96581b9.5c6a9",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1220,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c3c5f1f9.a2879",
+        "type": "function",
+        "z": "f96581b9.5c6a9",
+        "name": "NotiValve2",
+        "func": "if (msg.payload===true) {\n    msg.payload=\"OFF in\" + flow.get('rmOFF') + \" minutes\";\n}\nelse\n{\n    msg.payload=\"ON in \" + flow.get('rmON') + \" minutes\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 790,
+        "y": 140,
+        "wires": [
+            [
+                "7b6306eb.32e9e8"
+            ]
+        ]
+    },
+    {
+        "id": "68d475af.1fe4dc",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "34997b95.b75554",
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "abf3e8f8.b6ced8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "Pi Main",
+        "broker": "192.168.1.41",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "34997b95.b75554",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]
